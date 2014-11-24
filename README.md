@@ -97,9 +97,11 @@ An optional callback to be called when the `type` is called.
 
 Emits an event.
 
-### .end()
+### .end(callback)
 
-Writes a newline.
+Type: `Function`
+
+Writes a newline and executes an optional callback function.
 
 ## Options
 

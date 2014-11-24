@@ -79,11 +79,17 @@ Squeak.prototype.type = function (type, opts, cb) {
 /**
  * End
  *
+ * @param {Function} cb
  * @api public
  */
 
-Squeak.prototype.end = function () {
+Squeak.prototype.end = function (cb) {
 	this.stream.write('\n');
+
+	if (cb) {
+		cb();
+	}
+
 	return this;
 };
 
