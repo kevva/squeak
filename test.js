@@ -24,6 +24,17 @@ test('add type', function (t) {
 	t.assert(typeof log.type === 'function');
 });
 
+test('add type with custom prefix', function (t) {
+	t.plan(1);
+
+	var stream = newStream();
+	var log = new Squeak({ stream: stream })
+		.type('foo', { prefix: 'bar' });
+
+	log.foo('foo');
+	t.assert(/bar/.test(stream.data.toString()));
+});
+
 test('add type with callback', function (t) {
 	t.plan(1);
 
