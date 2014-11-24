@@ -14,25 +14,45 @@ $ npm install --save squeak
 
 ```js
 var Squeak = require('squeak');
-var log = new Squeak({ separator: ' ' });
+var log = new Squeak()
+	.type('info')
+	.type('success', { color: 'green' })
+	.type('warn', { color: 'yellow' })
+	.type('error', { color: 'red' }, function () {
+		log.end();
+		process.exit(1);
+	});
 
-log.type('success', { color: 'green', prefix: '✔' });
-log.type('warn', { color: 'yellow', prefix: '⚠' });
-log.type('error', { color: 'red', prefix: '✖' }, function () {
-	log.end();
-	process.exit(1);
-});
-
+log.info('this is a info message');
 log.success('this is a success message');
 log.warn('this is a warning');
 log.error(new Error('this is an error').stack);
 
 /*
+     info : this is a info message
+  success : this is a success message
+     warn : this is a warning
+    error : this is an error
+    at ChildProcess.exithandler (child_process.js:648:15)
+    at ChildProcess.emit (events.js:98:17)
+ */
+```
+
+You can also customize the different types to use a custom prefix using the 
+`prefix` option:
+
+```js
+var Squeak = require('squeak');
+var log = new Squeak({ separator: ' ' })
+	.type('success', { color: 'green', prefix: '✔' })
+	.type('warn', { color: 'yellow', prefix: '⚠' });
+
+log.success('this is a success message');
+log.warn('this is a warning');
+
+/*
   ✔ this is a success message
   ⚠ this is a warning
-  ✖ this is an error
-  at ChildProcess.exithandler (child_process.js:648:15)
-  at ChildProcess.emit (events.js:98:17)
  */
 ```
 
@@ -65,9 +85,9 @@ Type: `Object`
 Customize your type with a `color` and a `prefix`.
 
 * `color`: Sets the prefix color. Supported colors can be found [here](https://github.com/sindresorhus/ansi-styles#colors).
-* `prefix`: Sets the `type` prefix. Uses `type` as default.
+* `prefix`: Sets the `type` prefix. Uses `type` by default.
 
-#### cb
+#### callback
 
 Type: `Function`
 
@@ -93,7 +113,7 @@ Sets the indentation.
 ### separator
 
 Type: `String`  
-Default: ` : `
+Default: `  :  `
 
 Customize the separator between the `prefix` and the message.
 
