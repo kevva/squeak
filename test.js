@@ -14,13 +14,36 @@ function newStream() {
 	return stream;
 }
 
-test('add type', function (t) {
+test('use a custom separator', function (t) {
 	t.plan(1);
+
+	var stream = newStream();
+	var log = new Squeak({ separator: ' - ', stream: stream })
+		.type('foo');
+
+	log.foo('bar');
+	t.assert(/ - /.test(stream.data.toString()));
+});
+
+test('customize indent', function (t) {
+	t.plan(1);
+
+	var stream = newStream();
+	var log = new Squeak({ indent: 4, stream: stream })
+		.type('foo');
+
+	log.foo('bar');
+	t.assert(/    foo/.test(stream.data.toString()));
+});
+
+test('add type', function (t) {
+	t.plan(2);
 
 	var stream = newStream();
 	var log = new Squeak({ stream: stream })
 		.type('foo');
 
+	t.assert(log.types.length === 1);
 	t.assert(typeof log.type === 'function');
 });
 
