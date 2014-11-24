@@ -64,9 +64,17 @@ Type: `Object`
 
 Creates a new `Squeak` instance with [options](#options-1).
 
-### .write(message)
+### .write(args)
 
 Writes to `options.stream`, using `process.stderr` by default.
+
+### .writeln(args)
+
+Same as `.write()` but with a new line.
+
+### .writelpad(args)
+
+Same as `.write()` but with padding.
 
 ### .type(type, options, callback)
 

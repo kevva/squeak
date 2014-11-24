@@ -83,6 +83,16 @@ test('format variadic arguments', function (t) {
 	t.assert(/foo bar/.test(stream.data.toString()));
 });
 
+test('write with padding', function (t) {
+	t.plan(1);
+
+	var stream = newStream();
+	var log = new Squeak({ stream: stream });
+
+	log.writelpad('foo');
+	t.assert(/  foo/.test(stream.data.toString()));
+});
+
 test('emit events', function (t) {
 	t.plan(1);
 

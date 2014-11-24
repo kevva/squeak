@@ -34,13 +34,43 @@ function Squeak(opts) {
 inherits(Squeak, EventEmitter);
 
 /**
- * Write
+ * Write args to stream
  *
  * @api public
  */
 
 Squeak.prototype.write = function () {
-	this.log([].slice.call(arguments), null, 'reset');
+	this.log([].slice.call(arguments));
+	return this;
+};
+
+/**
+ * Write args and new line to stream
+ *
+ * @api public
+ */
+
+Squeak.prototype.writeln = function () {
+	this.log([].slice.call(arguments));
+	this.stream.write('\n');
+	return this;
+};
+
+/**
+ * Pad and write args to stream
+ *
+ * @api public
+ */
+
+Squeak.prototype.writelpad = function () {
+	var args = [].slice.call(arguments);
+	var pad = new Array(this.indent + 1).join(' ');
+
+	if (args.length) {
+		args[0] = pad + args[0];
+	}
+
+	this.log(args);
 	return this;
 };
 
@@ -60,13 +90,12 @@ Squeak.prototype.type = function (type, opts, cb) {
 	}
 
 	opts = opts || {};
+	opts.color = opts.color || 'reset';
+	opts.prefix = opts.prefix || type;
 
-	var color = opts.color || 'reset';
-	var prefix = opts.prefix || type;
-
-	this.types.push(prefix);
+	this.types.push(opts.prefix);
 	this[type] = function () {
-		this.log([].slice.call(arguments), prefix, color);
+		this.log([].slice.call(arguments), opts);
 
 		if (cb) {
 			cb();
@@ -97,13 +126,16 @@ Squeak.prototype.end = function (cb) {
  * Log
  *
  * @param {Array} args
- * @param {String} prefix
- * @param {String} color
+ * @param {Object} opts
  * @api private
  */
 
-Squeak.prototype.log = function (args, prefix, color) {
+Squeak.prototype.log = function (args, opts) {
+	opts = opts || {};
+
 	var msg = [fmt.apply(null, args)];
+	var color = opts.color;
+	var prefix = opts.prefix;
 
 	if (prefix) {
 		msg.unshift(chalk[color](align(prefix, this.types, this.indent)));
