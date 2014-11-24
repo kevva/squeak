@@ -42,7 +42,7 @@ log.error(new Error('this is an error').stack);
 
 Type: `Object`
 
-Creates a new `Squeak` instance with [options](#options).
+Creates a new `Squeak` instance with [options](#options-1).
 
 ### .write(message)
 
