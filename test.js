@@ -84,9 +84,13 @@ test('format variadic arguments', function (t) {
 });
 
 test('emit events', function (t) {
-	t.plan(2);
+	t.plan(1);
 
-	var called = {};
+	function emit() {
+		i++;
+	}
+
+	var i = 0;
 	var stream = newStream();
 	var log = new Squeak({ stream: stream })
 		.type('foo', function () {
@@ -96,17 +100,10 @@ test('emit events', function (t) {
 			log.emit('bar');
 		});
 
-	log.on('foo', function () {
-		called.a = true;
-	});
-
-	log.on('bar', function () {
-		called.b = true;
-	});
-
+	log.on('foo', emit);
+	log.on('bar', emit);
 	log.foo('foo');
 	log.bar('bar');
 
-	t.assert(called.a);
-	t.assert(called.b);
+	t.assert(i === 2);
 });
