@@ -21,6 +21,7 @@ function Squeak(opts) {
 	EventEmitter.call(this);
 
 	this.opts = opts || {};
+	this.align = this.opts.align !== false;
 	this.indent = this.opts.indent || 2;
 	this.separator = this.opts.separator || ' : ';
 	this.stream = this.opts.stream || process.stderr;
@@ -138,7 +139,8 @@ Squeak.prototype.log = function (args, opts) {
 	var prefix = opts.prefix;
 
 	if (prefix) {
-		msg.unshift(chalk[color](align(prefix, this.types, this.indent)));
+		var arr = this.align ? this.types : [prefix];
+		msg.unshift(chalk[color](align(prefix, arr, this.indent)));
 	}
 
 	this.stream.write(msg.join(this.separator));

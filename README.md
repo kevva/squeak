@@ -113,6 +113,18 @@ Writes a newline and executes an optional callback function.
 
 ## Options
 
+### align
+
+Type: `Boolean`  
+Default: `true`
+
+Whether to align the prefixes or not. E.g:
+
+```sh
+     foo : hello
+  foobar : world
+```
+
 ### indent
 
 Type: `Number`  

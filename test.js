@@ -36,6 +36,18 @@ test('customize indent', function (t) {
 	t.assert(/    foo/.test(stream.data.toString()));
 });
 
+test('remove align', function (t) {
+	t.plan(1);
+
+	var stream = newStream();
+	var log = new Squeak({ align: false, stream: stream })
+		.type('foo')
+		.type('foobar');
+
+	log.foo('bar');
+	t.assert(/  foo/.test(stream.data.toString()));
+});
+
 test('add type', function (t) {
 	t.plan(2);
 
