@@ -16,9 +16,9 @@ $ npm install --save squeak
 var Squeak = require('squeak');
 var log = new Squeak()
 	.type('info')
-	.type('success', { color: 'green' })
-	.type('warn', { color: 'yellow' })
-	.type('error', { color: 'red' }, function () {
+	.type('success', {color: 'green'})
+	.type('warn', {color: 'yellow'})
+	.type('error', {color: 'red'}, function () {
 		log.end();
 		process.exit(1);
 	});
@@ -43,9 +43,9 @@ You can also customize the different types to use a custom prefix using the
 
 ```js
 var Squeak = require('squeak');
-var log = new Squeak({ separator: ' ' })
-	.type('success', { color: 'green', prefix: '✔' })
-	.type('warn', { color: 'yellow', prefix: '⚠' });
+var log = new Squeak({separator: ' '})
+	.type('success', {color: 'green', prefix: '✔'})
+	.type('warn', {color: 'yellow', prefix: '⚠'});
 
 log.success('this is a success message');
 log.warn('this is a warning');
@@ -60,9 +60,40 @@ log.warn('this is a warning');
 
 ### new Squeak(options)
 
-Type: `Object`
+Creates a new `Squeak` instance.
 
-Creates a new `Squeak` instance with [options](#options-1).
+#### options.align
+
+Type: `Boolean`  
+Default: `true`
+
+Whether to align the prefixes or not. E.g:
+
+```sh
+     foo : hello
+  foobar : world
+```
+
+#### options.indent
+
+Type: `Number`  
+Default: `2`
+
+Sets the indentation.
+
+#### options.separator
+
+Type: `String`  
+Default: `  :  `
+
+Customize the separator between the `prefix` and the message.
+
+#### options.stream
+
+Type: `Stream`  
+Default: `process.stderr`
+
+Which `stream` to write to.
 
 ### .write(args)
 
@@ -86,14 +117,17 @@ Type: `String`
 
 The name of the type. Will be used as `prefix` by default.
 
-#### options
+#### options.color
 
-Type: `Object`
+Type: `String`
 
-Customize your type with a `color` and a `prefix`.
+Sets the prefix color. Supported colors can be found [here](https://github.com/sindresorhus/ansi-styles#colors).
 
-* `color`: Sets the prefix color. Supported colors can be found [here](https://github.com/sindresorhus/ansi-styles#colors).
-* `prefix`: Sets the `type` prefix. Uses `type` by default.
+#### options.prefix
+
+Type: `String`
+
+Sets the `type` prefix. Uses `type` by default.
 
 #### callback
 
@@ -110,41 +144,6 @@ Emits an event.
 Type: `Function`
 
 Writes a newline and executes an optional callback function.
-
-## Options
-
-### align
-
-Type: `Boolean`  
-Default: `true`
-
-Whether to align the prefixes or not. E.g:
-
-```sh
-     foo : hello
-  foobar : world
-```
-
-### indent
-
-Type: `Number`  
-Default: `2`
-
-Sets the indentation.
-
-### separator
-
-Type: `String`  
-Default: `  :  `
-
-Customize the separator between the `prefix` and the message.
-
-### stream
-
-Type: `Stream`  
-Default: `process.stderr`
-
-Which `stream` to write to.
 
 ## License
 
