@@ -4,11 +4,13 @@
 
 ![](https://cloud.githubusercontent.com/assets/709159/5165451/f0ca124e-73e4-11e4-8a49-9e278b7aff16.png)
 
+
 ## Install
 
-```sh
+```
 $ npm install --save squeak
 ```
+
 
 ## Usage
 
@@ -56,6 +58,7 @@ log.warn('this is a warning');
  */
 ```
 
+
 ## API
 
 ### new Squeak(options)
@@ -64,7 +67,7 @@ Creates a new `Squeak` instance.
 
 #### options.align
 
-Type: `Boolean`  
+Type: `boolean`  
 Default: `true`
 
 Whether to align the prefixes or not. E.g:
@@ -76,34 +79,40 @@ Whether to align the prefixes or not. E.g:
 
 #### options.indent
 
-Type: `Number`  
+Type: `number`  
 Default: `2`
 
 Sets the indentation.
 
 #### options.separator
 
-Type: `String`  
+Type: `string`  
 Default: `  :  `
 
 Customize the separator between the `prefix` and the message.
 
 #### options.stream
 
-Type: `Stream`  
+Type: `stream`  
 Default: `process.stderr`
 
 Which `stream` to write to.
 
 ### .write(args)
 
+Type: `string`
+
 Writes to `options.stream`, using `process.stderr` by default.
 
 ### .writeln(args)
 
+Type: `string`
+
 Same as `.write()` but with a new line.
 
 ### .writelpad(args)
+
+Type: `string`
 
 Same as `.write()` but with padding.
 
@@ -113,25 +122,25 @@ Adds a type.
 
 #### type
 
-Type: `String`
+Type: `string`
 
 The name of the type. Will be used as `prefix` by default.
 
 #### options.color
 
-Type: `String`
+Type: `string`
 
 Sets the prefix color. Supported colors can be found [here](https://github.com/sindresorhus/ansi-styles#colors).
 
 #### options.prefix
 
-Type: `String`
+Type: `string`
 
 Sets the `type` prefix. Uses `type` by default.
 
 #### callback
 
-Type: `Function`
+Type: `function`
 
 An optional callback to be called when the `type` is called.
 
@@ -141,9 +150,10 @@ Emits an event.
 
 ### .end(callback)
 
-Type: `Function`
+Type: `function`
 
 Writes a newline and executes an optional callback function.
+
 
 ## License
 

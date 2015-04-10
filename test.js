@@ -1,7 +1,7 @@
 'use strict';
 
-var Squeak = require('./');
 var test = require('ava');
+var Squeak = require('./');
 
 function newStream() {
 	var stream = new require('stream').Writable();
@@ -18,10 +18,14 @@ test('use a custom separator', function (t) {
 	t.plan(1);
 
 	var stream = newStream();
-	var log = new Squeak({ separator: ' - ', stream: stream })
-		.type('foo');
+	var log = new Squeak({
+		separator: ' - ',
+		stream: stream
+	});
 
+	log.type('foo');
 	log.foo('bar');
+
 	t.assert(/ - /.test(stream.data.toString()));
 });
 
@@ -29,10 +33,14 @@ test('customize indent', function (t) {
 	t.plan(1);
 
 	var stream = newStream();
-	var log = new Squeak({ indent: 4, stream: stream })
-		.type('foo');
+	var log = new Squeak({
+		indent: 4,
+		stream: stream
+	});
 
+	log.type('foo');
 	log.foo('bar');
+
 	t.assert(/    foo/.test(stream.data.toString()));
 });
 
@@ -40,11 +48,15 @@ test('remove align', function (t) {
 	t.plan(1);
 
 	var stream = newStream();
-	var log = new Squeak({ align: false, stream: stream })
-		.type('foo')
-		.type('foobar');
+	var log = new Squeak({
+		align: false,
+		stream: stream
+	});
 
+	log.type('foo');
+	log.type('foobar');
 	log.foo('bar');
+
 	t.assert(/  foo/.test(stream.data.toString()));
 });
 
@@ -52,7 +64,7 @@ test('add type', function (t) {
 	t.plan(2);
 
 	var stream = newStream();
-	var log = new Squeak({ stream: stream })
+	var log = new Squeak({stream: stream})
 		.type('foo');
 
 	t.assert(log.types.length === 1);
@@ -63,8 +75,8 @@ test('add type with custom prefix', function (t) {
 	t.plan(1);
 
 	var stream = newStream();
-	var log = new Squeak({ stream: stream })
-		.type('foo', { prefix: 'bar' });
+	var log = new Squeak({stream: stream})
+		.type('foo', {prefix: 'bar'});
 
 	log.foo('foo');
 	t.assert(/bar/.test(stream.data.toString()));
@@ -75,7 +87,7 @@ test('add type with callback', function (t) {
 
 	var called;
 	var stream = newStream();
-	var log = new Squeak({ stream: stream })
+	var log = new Squeak({stream: stream})
 		.type('foo', function () {
 			called = true;
 		});
@@ -88,7 +100,7 @@ test('format variadic arguments', function (t) {
 	t.plan(1);
 
 	var stream = newStream();
-	var log = new Squeak({ stream: stream })
+	var log = new Squeak({stream: stream})
 		.type('foo');
 
 	log.foo('foo %s', 'bar');
@@ -99,7 +111,7 @@ test('write with padding', function (t) {
 	t.plan(1);
 
 	var stream = newStream();
-	var log = new Squeak({ stream: stream });
+	var log = new Squeak({stream: stream});
 
 	log.writelpad('foo');
 	t.assert(/  foo/.test(stream.data.toString()));
@@ -114,7 +126,7 @@ test('emit events', function (t) {
 
 	var i = 0;
 	var stream = newStream();
-	var log = new Squeak({ stream: stream })
+	var log = new Squeak({stream: stream})
 		.type('foo', function () {
 			log.emit('foo');
 		})

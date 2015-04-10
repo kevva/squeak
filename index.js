@@ -1,10 +1,10 @@
 'use strict';
 
-var align = require('lpad-align');
-var chalk = require('chalk');
 var EventEmitter = require('events').EventEmitter;
 var fmt = require('util').format;
 var inherits = require('util').inherits;
+var chalk = require('chalk');
+var lpadAlign = require('lpad-align');
 
 /**
  * Initialize a new `Squeak`
@@ -140,7 +140,7 @@ Squeak.prototype.log = function (args, opts) {
 
 	if (prefix) {
 		var arr = this.align ? this.types : [prefix];
-		msg.unshift(chalk[color](align(prefix, arr, this.indent)));
+		msg.unshift(chalk[color](lpadAlign(prefix, arr, this.indent)));
 	}
 
 	this.stream.write(msg.join(this.separator));
