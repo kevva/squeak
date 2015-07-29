@@ -1,5 +1,4 @@
 'use strict';
-
 var EventEmitter = require('events').EventEmitter;
 var fmt = require('util').format;
 var inherits = require('util').inherits;
@@ -28,11 +27,8 @@ function Squeak(opts) {
 	this.types = [];
 }
 
-/**
- * Inherit from `EventEmitter`
- */
-
 inherits(Squeak, EventEmitter);
+module.exports = Squeak;
 
 /**
  * Write args to stream
@@ -148,9 +144,3 @@ Squeak.prototype.log = function (args, opts) {
 
 	return this;
 };
-
-/**
- * Module exports
- */
-
-module.exports = Squeak;
