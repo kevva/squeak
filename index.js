@@ -3,6 +3,7 @@ var EventEmitter = require('events').EventEmitter;
 var fmt = require('util').format;
 var inherits = require('util').inherits;
 var chalk = require('chalk');
+var consoleStream = require('console-stream');
 var lpadAlign = require('lpad-align');
 
 /**
@@ -23,7 +24,7 @@ function Squeak(opts) {
 	this.align = this.opts.align !== false;
 	this.indent = this.opts.indent || 2;
 	this.separator = this.opts.separator || ' : ';
-	this.stream = this.opts.stream || process.stderr;
+	this.stream = this.opts.stream || process.stderr || consoleStream();
 	this.types = [];
 }
 
